@@ -51,20 +51,20 @@ class MSCFirestore:
         for doc in docs:
             exist = True
             if category != doc.to_dict()['category']:
-                print("[Edit] %s %s %s" % (doc.id, sentence, category))
+                print(f"[Edit] {doc.id} {sentence} {category}")
                 self.sentences.document(doc.id).set({
                         "sentence": sentence,
                         "category": category
                     })
             else:
-                print("[Skip] %s %s %s" % (doc.id, sentence, category))
+                print(f"[Skip] {doc.id} {sentence} {category}")
 
         if not exist:
             self.sentences.add({
                 "sentence": sentence,
                 "category": category
             })
-            print("[Add] %s %s" % (sentence, category))
+            print(f"[Add] {sentence} {category}")
 
     def remove_sentence(self, key):
         self.sentences.child(key).delete()
@@ -90,7 +90,7 @@ def save_data(docs, outfile, keys):
                     values.append(docDict.get(key,'default'))
             tsvout.writerow(values)
             index += 1
-        print('Wrote {} items to {}'.format(index, outfile))
+        print(f'Wrote {index} items to {outfile}')
 
 def download_samples(speech_filename):
     # print('Downloading samples...', speech_filename)
